@@ -46,12 +46,12 @@ A powerful, feature-rich web application for creating, editing, and understandin
 ## 🚀 **Quick Start**
 
 ### Method 1: Direct Use
-1. Download `cron11.html`
+1. Download `index.html`
 2. Open in any modern web browser
 3. Start creating cron expressions immediately!
 
 ### Method 2: Web Server
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cron-expression-builder.git
+git clone https://github.com/arshambh/Advanced-Cron-Expression-Builder.git
 cd cron-expression-builder
