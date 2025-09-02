@@ -144,21 +144,15 @@
                     const now = new Date();
                     const startTime = new Date(now.getTime() + 1000);
                     let iterationCount = 0;
-                    const maxIterations = 50000; // Prevent infinite loops
+                    const maxIterations = 500000; // Increased to prevent premature break for frequent schedules
 
                     // Optimized calculation loop
                     outerLoop: for (let testYear of yearValues) {
                         for (let testMonth of monthValues) {
                             const daysInMonth = this.getDaysInMonth(testMonth, testYear);
-                            
                             for (let testDay = 1; testDay <= daysInMonth; testDay++) {
                                 const testDate = new Date(testYear, testMonth - 1, testDay);
-                                
-                                // Skip if day doesn't match pattern
-                                if (!this.isDayMatch(testDate, dayOfMonth, dayOfWeek)) {
-                                    continue;
-                                }
-
+                                if (!this.isDayMatch(testDate, dayOfMonth, dayOfWeek)) continue;
                                 for (let testHour of hoursValues) {
                                     for (let testMinute of minutesValues) {
                                         for (let testSecond of secondsValues) {
@@ -167,23 +161,19 @@
                                                 console.warn('Max iterations reached, breaking calculation');
                                                 break outerLoop;
                                             }
-
                                             const executionTime = new Date(testYear, testMonth - 1, testDay, testHour, testMinute, testSecond);
-                                            
                                             if (executionTime >= startTime) {
                                                 executions.push(executionTime);
-                                                
                                                 if (executions.length >= count) {
                                                     break outerLoop;
                                                 }
                                             }
-
-                                            // Allow async operation to prevent blocking
-                                            if (iterationCount % 1000 === 0) {
-                                                await new Promise(resolve => setTimeout(resolve, 0));
-                                            }
                                         }
                                     }
+                                }
+                                // Allow async operation to prevent blocking
+                                if (iterationCount % 5000 === 0) {
+                                    await new Promise(resolve => setTimeout(resolve, 0));
                                 }
                             }
                         }
